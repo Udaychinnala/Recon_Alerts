@@ -268,6 +268,18 @@ def run_pipeline(excel_path: str) -> dict:
     return status
 
 
+with st.sidebar:
+    st.markdown("### 📁 Select Excel File")
+    excel_file = st.file_uploader("Upload the latest Reconcilation Alerts.xlsx", type=["xlsx"])
+
+if excel_file:
+    import tempfile
+    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".xlsx")
+    tmp.write(excel_file.read())
+    ONEDRIVE_PATH = tmp.name
+else:
+    st.stop()  # wait until user uploads file
+
 # ═══════════════════════════════════════════════════════════════
 # RUN PIPELINE ON EVERY LOAD (no cache)
 # ═══════════════════════════════════════════════════════════════
